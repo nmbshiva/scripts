@@ -35,12 +35,19 @@ echo ""
 echo "[+] Target set to $target"
 echo "[+} nmap located at $nmap"
 echo "[+] enum4linux located at $e4l"
-
 echo ""
-echo "[+] Starting nmap scan"
+
+# echo "[+] Starting nmap scan"
+echo "[+] Getting open ports."
 
 # run nmap
-nmap -T4 -sV -sC -oN nmap.txt $target
+nmap -T4 -p- -oN nmap.txt $target
+grep "open" nmap.txt | awk {'print $1'} | awk -F/ {'print $1'} > ports.txt && cat ports.txt | tr '\n' ',' > open.txt
+echo ""
+echo "[+] Performing service scan on open ports."
+echo ""
+nmap -T4 -sV -sC -p `cat open.txt` -oN banners.txt $target && grep "open" banners.txt > banners1.txt && mv banners1.txt banners.txt
+rm ports.txt open.txt
 
 # check if smb open and if so offer to scan for vulns
 grep -q "445/tcp   open" nmap.txt
@@ -59,7 +66,8 @@ echo ""
 # check if open smb found
 grep -q "445/tcp   open" nmap.txt
 if [ $? -eq 0 ]	; then 
-	echo "[+] 445 is open, running enum4linux to test 'NULL' sessions."
+	echo "[+] 445 is open, using Enum4Linux to test for null sessions."
+	echo ""
 	$e4l -a $target | tee enum4linux.txt
 else
 	echo "[**] 445 not open! Skipping enum4linux!"
@@ -78,6 +86,8 @@ if [ -n "$cme" ]
 	fi
 	
 	echo "[+] Starting crackmapexec user, sessions and shares enumeration with provided creds."
+	echo "[!] WARNING: Ensure you don't inadvertently lock user accounts on the target machine!"
+	echo ""
 	
 	# for user in `cat users.txt`; do for pass in `cat pass.txt`; do $cme $target -u $user -p $pass $cme_command | tee cme_output.txt;done;done 
 	$cme smb $target -u $working_dir/users.txt -p $working_dir/pass.txt $cme_command | tee cme_output.txt
@@ -89,7 +99,7 @@ fi
 # display open ports to users
 echo ""
 echo "[+] Here are the open ports:"
-grep -E "/tcp.*open" nmap.txt
+grep -E "/tcp.*open" banners.txt
 
 echo ""
 
