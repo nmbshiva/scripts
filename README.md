@@ -20,3 +20,6 @@ Check if a list of usernames in a specified file have a password that matches th
 
 #### recon.sh:
 Basic recon script for machine enumeration - nmap, enum4linux, cme (includes default cred checks; user/pass files not included)
+
+#### ssh-attack.sh
+Find open ssh instances and brute force using hydra.
