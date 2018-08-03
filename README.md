@@ -10,7 +10,10 @@ Specify a domain, get the robots.txt and test which subdomains return a 200.
 Query crt.sh to get a list of subdomains related to the specified domain.
 
 #### threatcrowd.py:
-Get a list of previously seen subdomains via threatcrowd.org
+Get a list of previously seen subdomains via threatcrowd.org.
+
+#### webrecon.sh
+Enumerate a domain for subdomains and directories. Useful for bug bounties or pentests with no regard for noise.
 
 ### OS/Network enumeration
 ---
