@@ -1,1 +1,1 @@
-write-host "hello world"
+ping 10.1.1.165
