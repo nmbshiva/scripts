@@ -1,1 +1,1 @@
-calc.exe
+cmd.exe /c "calc.exe"
